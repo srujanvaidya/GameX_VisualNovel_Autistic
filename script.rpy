@@ -7,6 +7,12 @@ define flash_black = Fade(0.1, 0.0, 0.8, color="#000")
 define flash_blue  = Fade(0.1, 0.0, 0.7, color="#0a0a2e")
 define flash_red   = Fade(0.1, 0.0, 0.6, color="#1a0000")
 
+## Far-right position — character's right edge flush with screen edge
+transform far_right:
+    xalign 1.0
+    xanchor 1.0
+    yalign 1.0
+
 ## ─── Characters ──────────────────────────────────────────────────────────────
 
 define verma      = Character("Dr. Verma",        color="#c0a060")
@@ -35,11 +41,11 @@ image bg_power         = Transform("power.png",                    xysize=(1920,
 image bg_wormhole_in   = Transform("spaceship enters wormhole.png",xysize=(1920,1080), fit="cover")
 image bg_wormhole_ins  = Transform("inside wormhole.png",          xysize=(1920,1080), fit="cover")
 
-image scientist_verma  = Transform("nuclear scientist 1.png", ysize=900, fit="scale-down", yalign=1.0)
-image scientist_das    = Transform("nuclear scientist 2.png", ysize=900, fit="scale-down", yalign=1.0)
-image char_anika       = Transform("Anika.png",               ysize=900, fit="scale-down", yalign=1.0)
-image char_mir         = Transform("lassi.png",               ysize=900, fit="scale-down", yalign=1.0)
-image char_isro_dir    = Transform("Isro director.png",       ysize=900, fit="scale-down", yalign=1.0)
+image scientist_verma  = Transform("nuclear scientist 1.png", ysize=1030, fit="scale-down", yalign=1.0)
+image scientist_das    = Transform("nuclear scientist 2.png", ysize=1030, fit="scale-down", yalign=1.0)
+image char_anika       = Transform("Anika.png",               ysize=1230, fit="scale-down", yalign=1.0)
+image char_mir         = Transform("lassi.png",               ysize=1230, fit="scale-down", yalign=1.0)
+image char_isro_dir    = Transform("Isro director.png",       ysize=1230, fit="scale-down", yalign=1.0)
 
 ## ═══════════════════════════════════════════════════════════════════════════
 ##  S T A R T
@@ -58,7 +64,7 @@ label start:
     ## ─── Lab — Verma & Das ───────────────────────────────────────────────────
     scene bg_lab with dissolve
     show scientist_verma at left  with dissolve
-    show scientist_das   at right with dissolve
+    show scientist_das   at far_right with dissolve
     pause 0.3
 
     "ISRO Quantum Research Division — Bengaluru, India."
@@ -96,7 +102,7 @@ label lab_explosion:
 
     scene bg_lab with dissolve
     show scientist_verma at left with dissolve
-    show scientist_das   at right with dissolve
+    show scientist_das   at far_right with dissolve
 
     verma "Initiating ignition sequence."
 
@@ -117,7 +123,7 @@ label lab_explosion:
     pause 1.2
 
     scene bg_lab_blast with dissolve
-    show scientist_das at right with dissolve
+    show scientist_das at far_right with dissolve
 
     "Silence."
     "Then a sound with no name — a low, tidal groan passing through walls, floor, bone."
@@ -167,7 +173,7 @@ label lab_explosion:
     ## ─── ISRO Mission briefing ───────────────────────────────────────────────
     scene bg_isro with dissolve
     show scientist_das at left with dissolve
-    show char_isro_dir at right with dissolve
+    show char_isro_dir at far_right with dissolve
     pause 0.3
 
     "ISRO Mission Control. Sriharikota. Two years after the rift."
@@ -262,29 +268,39 @@ label lab_explosion:
 
     das "Put it on."
 
-    ## ─── Anika's first transmission ──────────────────────────────────────────
-    scene bg_wormhole_in with dissolve
-    pause 0.3
+    ## ─── Anika's first transmission — anki stuck.webm (video-only, muted) ───────
+    ## Mute the movie channel so the video's own audio is silent
+    $ renpy.music.set_volume(0.0, channel="movie")
+    scene Movie("anki stuck.webm", loop=True) with dissolve
 
     anika_dist "Still alive. Anirva is locked in the gradient field. I am not alone here."
 
     scene bg_isro with dissolve
+    $ renpy.music.set_volume(1.0, channel="movie")
     show scientist_das at left with dissolve
 
     das "{i}(under his breath){/i} Anika."
 
-    scene bg_wormhole_in with dissolve
+    ## Second glimpse
+    $ renpy.music.set_volume(0.0, channel="movie")
+    scene Movie("anki stuck.webm", loop=True) with dissolve
 
     anika_dist "I can see things. I cannot explain it. The past — I can see the past. Moments playing back. 2026. I can see the lab. I can see you, Dr. Das. I can also see forward. Fragments."
 
     scene bg_isro with dissolve
+    $ renpy.music.set_volume(1.0, channel="movie")
     show scientist_das at left with dissolve
 
     comm "The signal is fading—"
 
-    scene bg_wormhole_in with dissolve
+    ## Third glimpse
+    $ renpy.music.set_volume(0.0, channel="movie")
+    scene Movie("anki stuck.webm", loop=True) with dissolve
 
     anika_dist "There is something beyond this wormhole. Another side. Connected to ours. But it is twenty years behind. I am standing at the edge of two different nows. Send someone. Please—"
+
+    ## Restore movie channel volume
+    $ renpy.music.set_volume(1.0, channel="movie")
 
     scene bg_isro with dissolve
     show scientist_das at left with dissolve
@@ -333,9 +349,9 @@ label lab_explosion:
 
     ## ─── Vikrant mission briefing ────────────────────────────────────────────
     scene bg_isro with dissolve
-    show char_mir      at right with dissolve
+    show char_mir      at far_right with dissolve
     show scientist_das at left  with dissolve
-    show char_isro_dir at right with dissolve
+    show char_isro_dir at far_right with dissolve
     pause 0.3
 
     "ISRO's fastest mission turnaround. Eighteen days. Zero sleep."
@@ -446,7 +462,7 @@ label lab_explosion:
     ## ─── Ground Control debate ───────────────────────────────────────────────
     scene bg_isro with dissolve
     show scientist_das at left with dissolve
-    show char_isro_dir at right with dissolve
+    show char_isro_dir at far_right with dissolve
     pause 0.3
 
     das "We cannot authorise wormhole entry. We do not know if Vikrant survives transit."
@@ -522,8 +538,15 @@ label ending_hero:
     "Vikrant does not hesitate."
     "Mir pushes the throttle to maximum and flies straight — arrow-straight — into the wormhole."
 
-    scene bg_wormhole_ins with dissolve
-    pause 0.5
+    ## ─── Wormhole travel video (webm) + rumble for 15s ────────────────────
+    stop music fadeout 0.3
+    play music "rumble.mp3" fadein 0.5
+    $ renpy.music.set_volume(0.0, channel="movie")
+    scene Movie("wormhole travel.webm", loop=True) with dissolve
+    pause 15.0
+    $ renpy.music.set_volume(1.0, channel="movie")
+    stop music fadeout 1.5
+    scene black with dissolve
 
     "The hull sings. The instruments go white."
     "Time becomes visible — not as clocks, but as layered, overlapping light."
@@ -540,7 +563,7 @@ label ending_hero:
 
     hide char_mir
     scene bg_lab with dissolve
-    show scientist_das at right with dissolve
+    show scientist_das at far_right with dissolve
     pause 0.3
 
     "Bengaluru. 2026. The air smells of rain."
@@ -614,7 +637,7 @@ label ending_bittersweet:
 
     hide char_mir
     scene bg_lab with dissolve
-    show scientist_das at right with dissolve
+    show scientist_das at far_right with dissolve
     pause 0.3
 
     "Mir reaches the lab. The experiment has already started."
