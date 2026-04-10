@@ -1,4 +1,4 @@
-﻿################################################################################
+################################################################################
 ## Initialization
 ################################################################################
 
@@ -207,9 +207,57 @@ style input:
 screen choice(items):
     style_prefix "choice"
 
-    vbox:
+    ## Full-screen dim overlay — makes scene dark so choices pop
+    add Solid("#000000c0"):
+        xpos 0
+        ypos 0
+        xsize 1920
+        ysize 1080
+
+    ## "CHOOSE" label at top-center
+    text "— CHOOSE YOUR PATH —":
+        xalign 0.5
+        yalign 0.5
+        yoffset -120
+        size 16
+        bold True
+        color "#ffffff55"
+        kerning 5.0
+        font "DejaVuSans.ttf"
+
+    ## Horizontal row of buttons, centered in the middle of the screen
+    hbox:
+        xalign 0.5
+        yalign 0.5
+        yoffset 20
+        spacing 30
+
         for i in items:
-            textbutton i.caption action i.action
+            button:
+                action i.action
+                xsize 420
+                ysize 110
+                background Solid("#ffffff")
+                hover_background Solid("#111111")
+                padding (0, 0, 0, 0)
+
+                frame:
+                    xfill True
+                    yfill True
+                    background None
+                    padding (24, 0, 24, 0)
+
+                    text i.caption:
+                        xalign 0.5
+                        yalign 0.5
+                        textalign 0.5
+                        size 22
+                        bold True
+                        color "#111111"
+                        hover_color "#ffffff"
+                        font "DejaVuSans.ttf"
+                        layout "subtitle"
+                        substitute False
 
 
 style choice_vbox is vbox
@@ -218,10 +266,8 @@ style choice_button_text is button_text
 
 style choice_vbox:
     xalign 0.5
-    ypos 405
-    yanchor 0.5
-
-    spacing gui.choice_spacing
+    yalign 0.5
+    spacing 30
 
 style choice_button is default:
     properties gui.button_properties("choice_button")

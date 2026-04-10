@@ -1,329 +1,718 @@
-## ─── Character Definitions ───────────────────────────────────────────────────
+## ═══════════════════════════════════════════════════════════════════════════
+##  V O I D  —  Complete Script
+## ═══════════════════════════════════════════════════════════════════════════
 
 define flash       = Fade(0.1, 0.0, 0.5, color="#fff")
 define flash_black = Fade(0.1, 0.0, 0.8, color="#000")
+define flash_blue  = Fade(0.1, 0.0, 0.7, color="#0a0a2e")
+define flash_red   = Fade(0.1, 0.0, 0.6, color="#1a0000")
 
-define verma = Character("Dr. Verma",  color="#c0a060")
-define das   = Character("Dr. Das",    color="#60a0c0")
-define m     = Character("Meera",      color="#3498db")
-define a     = Character("Anika",      color="#9b59b6", what_prefix="{i}", what_suffix="{/i}")
-define ar    = Character("Arjun",      color="#e67e22")
-define p     = Character("Priya",      color="#2ecc71")
-define v     = Character("Voice from the Void", color="#ffffff")
-define narr  = Character(None,         kind=nvl_narrator)
+## ─── Characters ──────────────────────────────────────────────────────────────
 
-## ─── Game Variables ──────────────────────────────────────────────────────────
+define verma      = Character("Dr. Verma",        color="#c0a060")
+define das        = Character("Dr. Das",           color="#60a0c0")
+define isro_dir   = Character("ISRO Director",     color="#e8c96a")
+define anika      = Character("Anika",             color="#9b59b6",
+                               what_prefix="{i}", what_suffix="{/i}")
+define anika_dist = Character("Anika ~distorted~", color="#7a3fa0",
+                               what_prefix="{i}", what_suffix="{/i}")
+define mir        = Character("Mir",               color="#3498db")
+define ground     = Character("Ground Control",    color="#2ecc71")
+define comm       = Character("Comm Officer",      color="#f39c12")
 
-default trust_anika          = 0
-default entanglement_stability = 50
+## ─── Variables ───────────────────────────────────────────────────────────────
 
-## ─── Image Declarations ──────────────────────────────────────────────────────
+default trust_anika  = 0
+default mir_courage = 0
 
-image bg_lab         = Transform("lab.png",          xysize=(1920,1080), fit="cover")
-image bg_lab_blast   = Transform("lab blast.png",     xysize=(1920,1080), fit="cover")
-image bg_isro_rocket = Transform("isro rocket.png",   xysize=(1920,1080), fit="cover")
-image bg_isro_lab    = Transform("home.png",          xysize=(1920,1080), fit="cover")  ## swap with isro lab.png
+## ─── Images ──────────────────────────────────────────────────────────────────
 
-image scientist_verma = Transform("scientist man.png", ysize=900, fit="scale-down", yalign=1.0)
-image scientist_das   = Transform("scientist.png",    ysize=900, fit="scale-down", yalign=1.0)
-image astro_arjun     = Transform("man astro.png",    ysize=900, fit="scale-down", yalign=1.0)
-image astro_meera     = Transform("women saree.png",  ysize=900, fit="scale-down", yalign=1.0)
+image bg_lab           = Transform("lab.png",                      xysize=(1920,1080), fit="cover")
+image bg_lab_blast     = Transform("lab blast.png",                xysize=(1920,1080), fit="cover")
+image bg_rocket        = Transform("isro rocket.png",              xysize=(1920,1080), fit="cover")
+image bg_isro          = Transform("home.png",                     xysize=(1920,1080), fit="cover")
+image bg_power         = Transform("power.png",                    xysize=(1920,1080), fit="cover")
+image bg_wormhole_in   = Transform("spaceship enters wormhole.png",xysize=(1920,1080), fit="cover")
+image bg_wormhole_ins  = Transform("inside wormhole.png",          xysize=(1920,1080), fit="cover")
 
-## ─── START ───────────────────────────────────────────────────────────────────
+image scientist_verma  = Transform("nuclear scientist 1.png", ysize=900, fit="scale-down", yalign=1.0)
+image scientist_das    = Transform("nuclear scientist 2.png", ysize=900, fit="scale-down", yalign=1.0)
+image char_anika       = Transform("Anika.png",               ysize=900, fit="scale-down", yalign=1.0)
+image char_mir         = Transform("lassi.png",               ysize=900, fit="scale-down", yalign=1.0)
+image char_isro_dir    = Transform("Isro director.png",       ysize=900, fit="scale-down", yalign=1.0)
+
+## ═══════════════════════════════════════════════════════════════════════════
+##  S T A R T
+## ═══════════════════════════════════════════════════════════════════════════
 
 label start:
 
-    ## ── ACT 1 title card ─────────────────────────────────────────────────────
+    ## ─── ACT I TITLE ─────────────────────────────────────────────────────────
     scene black with dissolve
-    pause 0.6
-
-    show text "{size=72}{b}ACT I{/b}{/size}\n{size=36}{color=#aaaaaa}The Mission and the Trap{/color}{/size}" at truecenter with dissolve
+    pause 0.5
+    show text "{size=80}{b}ACT  I{/b}{/size}\n{size=36}{color=#888}The Experiment{/color}{/size}" at truecenter with dissolve
     pause 2.5
     hide text with dissolve
-    pause 0.4
-
-    ## ── Lab scene opens ──────────────────────────────────────────────────────
-    scene bg_lab with dissolve
-    pause 0.5
-
-    ## establish characters
-    show scientist_verma at left  with dissolve
-    show scientist_das   at right with dissolve
-
     pause 0.3
 
-    ## ── Opening dialogue — ambition and hubris ────────────────────────────────
+    ## ─── Lab — Verma & Das ───────────────────────────────────────────────────
+    scene bg_lab with dissolve
+    show scientist_verma at left  with dissolve
+    show scientist_das   at right with dissolve
+    pause 0.3
 
-    verma "Containment field is holding at 94%%. Remarkable. Absolutely remarkable, Das."
+    "ISRO Quantum Research Division — Bengaluru, India."
+    "A room that hums. Banks of servers. Light bending around the containment sphere at the centre."
 
-    das "Verma... we need to dial it back. We are way past the authorized parameters."
+    verma "Containment field locked at 97 percent. Das — three points from ignition. Tonight we change history."
 
-    verma "Authorized by who, Das? The committee? They lack vision. {i}Look at it.{/i} We have done it. Zero-point energy. A localized quantum tear."
+    das "The committee has not cleared phase three. We skipped four safety benchmarks—"
 
-    das "It is illegal for a reason! If that field fluctuates by even a fraction of a percent, the particle collision will—"
+    verma "History does not remember the ones who waited for permission. Look at it. Zero-point quantum energy. Clean. Infinite. Every light on Earth burning forever."
 
-    verma "It is completely stable. The Shunya core is behaving exactly as my models predicted. We are about to rewrite human history."
+    das "Or every light going out. The models show a resonance feedback loop at this energy density. If containment fails—"
 
-    das "History? Verma, if we harness this incorrectly we are not writing history — we are {b}ending{/b} it. This much energy could power entire continents."
+    verma "The field is holding. The Shunya Core is stable. We proceed."
 
-    verma "Or something greater. Do you understand what a controlled quantum rift means for weapons technology? No missile, no army, nothing stops a tear in spacetime."
+    "Das stares at the readout. His hand moves toward the emergency stop."
 
-    das "You are talking about a weapon of mass destruction. That is why the ethics board shut down the original proposal!"
+    ## ─── CHOICE 1 ────────────────────────────────────────────────────────────
+    menu:
+        "Stop him. This is not safe.":
+            das "Verma, I am pulling the override. This is not safe."
+            verma "Das — do NOT touch that panel—"
+            das "I am ending this. Now."
+            "They struggle. In the confusion — the stabiliser input drops by 0.3 percent."
+            $ trust_anika += 3
+            jump lab_explosion
 
-    verma "The ethics board is afraid of the dark. We are the ones holding the torch, Das. The nation that controls the Void controls the future."
+        "Let Verma proceed.":
+            das "...Alright. But the moment telemetry spikes, I am pulling the brake."
+            verma "It will not spike. Watch."
+            $ mir_courage += 2
+            jump lab_explosion
 
-    das "And if we lose control of it?"
+label lab_explosion:
 
-    verma "We {i}won't.{/i}"
+    scene bg_lab with dissolve
+    show scientist_verma at left with dissolve
+    show scientist_das   at right with dissolve
 
-    ## ── The catastrophe ───────────────────────────────────────────────────────
+    verma "Initiating ignition sequence."
 
-    das "Warning alarm! Verma — the resonance! It is spiking! The field is fracturing!"
+    das "Verma — the resonance is climbing. Past threshold—"
 
-    verma "That is impossible, the dampeners are active! Reroute the secondary grid — pump everything into the magnetic lock!"
+    verma "Normal fluctuation — compensate with secondary dampeners!"
 
-    das "I cannot! It is not pulling power — it is {b}emitting{/b} it! It is latching onto the floor! The geometry of the room is shifting!"
+    das "Nothing is responding! The field is INVERTING — the containment sphere is folding in—"
 
-    verma "Kill the power! Pull the manual override!"
+    verma "Kill the power! Manual override — kill EVERYTHING—"
 
-    das "The console is fused! Verma, the metal is... it is {i}melting{/i} into the glass! It is rewriting the matter around it! WE HAVE TO GET OUT!"
+    das "The console is fused! The metal is liquefying! WE HAVE TO RUN!"
 
-    ## blast scene transition
+    ## ─── Explosion ───────────────────────────────────────────────────────────
+    hide scientist_verma
+    hide scientist_das
     scene bg_lab_blast with flash
+    pause 1.2
+
+    scene bg_lab_blast with dissolve
+    show scientist_das at right with dissolve
+
+    "Silence."
+    "Then a sound with no name — a low, tidal groan passing through walls, floor, bone."
+
+    das "...Verma."
+
+    das "Surface telemetry. The rift went up. Through the ceiling. Through the stratosphere."
+
+    das "It is above the Earth."
 
     pause 0.8
 
-    ## dead silence — bass drop moment
-    scene bg_lab_blast with dissolve
+    das "What have we done?"
 
-    verma "Das... the surface telemetry."
-
-    das "Oh my god..."
-
-    verma "The rift... it did not stay in the containment grid. It is expanding. Upward."
-
-    das "Verma... what have we done?"
-
-    verma "..."
-
-    das "We did not open a door. We tore the {b}bottom out of the world.{/b}"
-
-    verma "The Void... it is self-sustaining now. We cannot stop it."
-
-    das "Millions of people. Verma — {i}millions of people.{/i}"
-
-    verma "{i}(barely a whisper){/i} I know."
-
-    ## ── Year 2047 title card — start earff destroy audio on black screen ──────
+    ## ─── Earth Destruction — VIDEO + AUDIO ───────────────────────────────────
+    hide scientist_das
     scene black with dissolve
-    play sound "earff destroy.mp3" fadeout 1.0
-    pause 1.0
-
-    show text "{size=64}{b}2047{/b}{/size}\n{size=28}{color=#888888}Twenty-one years later.{/color}{/size}" at truecenter with dissolve
-    pause 3.0
-    hide text with dissolve
     pause 0.4
 
-    ## ── Earth destroyed video — fullscreen ───────────────────────────────────
-    $ renpy.movie_cutscene("earth_destroyed.webm")
-
-    scene black with dissolve
-    "Year 2047. Earth is dying."
-    "Black swirls — The Void — consume the horizon. Oceans fold into nothing. Cities vanish in silence."
-    "Two billion people gone. The rest watch the sky and wait."
-
-    ## ── ISRO lab — last hope ─────────────────────────────────────────────────
-
-    scene bg_isro_lab with dissolve
+    show text "{size=60}{b}2 years later.{/b}{/size}\n{size=28}{color=#888}The Void spreads.{/color}{/size}" at truecenter with dissolve
+    pause 2.5
+    hide text with dissolve
     pause 0.3
 
-    show astro_arjun at left  with dissolve
-    show astro_meera at right with dissolve
+    stop music fadeout 0.5
+    play sound "earff destroy.mp3" fadein 1.0
+    $ renpy.movie_cutscene("earth_destroyed.webm", loops=0)
+    ## Sound plays until it naturally ends — no forced stop
 
-    m "The wormhole above the stratosphere — scientists believe it is the rift's origin point. If we go through, if we find the source..."
+    scene bg_power with dissolve
+    pause 0.3
 
-    ar "We shut it down. Or we die trying. Either way, Earth gets one last shot."
+    "The wormhole did not close."
+    "It grew."
+    "Cities along the equator went dark first. Then coastlines. Then everything within a thousand kilometres of the rift."
+    "Billions watched the sky turn violet."
+    "Then the sky disappeared."
 
-    m "The Vikram is ready. India built her in four years — the fastest spacecraft ever made. She will hold."
+    ## ─── ACT II TITLE ────────────────────────────────────────────────────────
+    scene black with flash_black
+    pause 0.3
+    show text "{size=80}{b}ACT  II{/b}{/size}\n{size=36}{color=#888}Anirva{/color}{/size}" at truecenter with dissolve
+    pause 2.5
+    hide text with dissolve
+    pause 0.3
 
-    ar "She had better. I have a daughter back in Chennai.\n{i}(grins){/i} She made me promise to bring her back a piece of the void."
+    ## ─── ISRO Mission briefing ───────────────────────────────────────────────
+    scene bg_isro with dissolve
+    show scientist_das at left with dissolve
+    show char_isro_dir at right with dissolve
+    pause 0.3
 
-    m "{i}(soft laugh){/i} Tell her I will wrap it in a saree."
+    "ISRO Mission Control. Sriharikota. Two years after the rift."
 
-    ar "She would love that."
+    isro_dir "Project Anirva. One pilot. Approach the wormhole. Deploy sensors. Transmit everything back."
 
-    ## ── Launch from Sriharikota ───────────────────────────────────────────────
+    das "And if the approach destabilises the rift further?"
 
-    scene bg_isro_rocket with flash_black
+    isro_dir "Then we know more than we do now. Our pilot understands the risk."
+
+    das "Who volunteered?"
+
+    isro_dir "Anika. She did not hesitate for a single second."
+
+    ## ─── CHOICE 2 ────────────────────────────────────────────────────────────
+    menu:
+        "Approve the mission. Earth needs answers.":
+            das "Then God help her. Approve it."
+            $ trust_anika += 2
+
+        "Raise objections. It is too dangerous.":
+            das "We are sending one woman towards a hole in spacetime with no extraction plan."
+            isro_dir "We have no better options, Das."
+            das "...then may she come back."
+            $ mir_courage += 1
+
+    ## ─── Anirva Launch ───────────────────────────────────────────────────────
+    hide scientist_das
+    hide char_isro_dir
+    scene bg_rocket with dissolve
+    show char_anika at left with dissolve
+    pause 0.3
+
+    "T-minus thirty seconds. Sriharikota Launch Pad Alpha."
+    "The rocket was named Anirva — the Sanskrit word for limitless."
+    "Inside, a single astronaut breathed slowly and watched the countdown."
+
+    ground "Anika, all systems nominal. You are go for launch."
+
+    "She did not reply. She had already said her goodbyes."
+
+    hide char_anika
+    scene bg_rocket with flash_black
     pause 0.5
 
-    show astro_arjun at left  with dissolve
-    show astro_meera at right with dissolve
+    "Ignition. The world shook."
+    "Anirva climbed through the stratosphere like a prayer aimed at God's eye."
+    "And at four hundred kilometres — the wormhole was waiting."
 
-    "Sriharikota Launch Centre. T-minus sixty seconds."
-    "The ground shakes. Three thousand people stand in silence at the perimeter fence."
-    "No cheering. Everyone knows this is goodbye — one way or another."
+    ## ─── Anirva gets TRAPPED ─────────────────────────────────────────────────
+    scene bg_wormhole_in with dissolve
+    pause 0.5
 
-    m "Arjun. Farewell message recorded?"
+    "The sensor array deployed perfectly."
+    "The data was extraordinary — gravitational readings that broke every instrument."
+    "Anika reached for the thrusters to pull back."
 
-    ar "Short one. Told my daughter the stars looked like her mother's eyes. Cried like an idiot for ten minutes after."
+    pause 0.8
 
-    m "Mine took four attempts. I kept apologising."
+    "The thrusters did not fire."
 
-    ar "Do not apologise. We chose this."
+    pause 1.0
 
-    m "Systems green across the board. Vikram — go for launch."
+    "Anirva was pulled into the gravitational gradient — not consumed, but held."
+    "Suspended at the threshold. Like a fly caught in amber."
 
-    "T-minus ten. Nine. Eight."
-    "The rocket breathes fire into the earth."
-    "Seven. Six. Five."
+    ground "Anirva — we are not reading your thrusters. Anika — respond."
 
-    ar "For Earth."
+    "Static."
 
-    m "For everyone."
+    ground "Anika — respond. Please respond."
 
-    "Ignition."
+    "The rocket sat at the edge of spacetime. Fully intact. Completely unreachable."
+    "Two weeks passed."
 
-    ## ── Wormhole entry ───────────────────────────────────────────────────────
-
-    scene black with flash
-    pause 0.2
-
-    scene bg_isro_rocket with dissolve
+    ## ─── ACT III TITLE ───────────────────────────────────────────────────────
+    scene black with flash_black
+    pause 0.3
+    show text "{size=80}{b}ACT  III{/b}{/size}\n{size=36}{color=#888}The Signal{/color}{/size}" at truecenter with dissolve
+    pause 2.5
+    hide text with dissolve
     pause 0.3
 
-    "The Vikram punches through the upper atmosphere. The wormhole yawns open — vast, violet, alive."
-    "It does not look like science. It looks like a mouth."
+    ## ─── Day 14 — ground control ─────────────────────────────────────────────
+    scene bg_isro with dissolve
+    show scientist_das at left with dissolve
+    pause 0.3
 
-    ar "Captain — hull stress at 60%%. 70%%. Radiation spiking—"
+    "Day 14. 03:47 AM. Ground Control has not slept."
 
-    m "Hold course."
+    comm "Sir. A signal — coming from the Anirva frequency. It is her."
 
-    ar "80%%. 85%%—"
+    das "Put it on."
 
-    m "{b}Hold course, Arjun.{/b}"
+    ## ─── Anika's first transmission ──────────────────────────────────────────
+    scene bg_wormhole_in with dissolve
+    pause 0.3
 
-    "The ship enters the wormhole."
-    "Time becomes a texture. Space folds like paper."
-    "Stars smear into ribbons. Arjun's voice stretches and slows."
+    anika_dist "Still alive. Anirva is locked in the gradient field. I am not alone here."
 
-    ar "{i}Capt— we are— losing— com—{/i}"
+    scene bg_isro with dissolve
+    show scientist_das at left with dissolve
 
-    scene black with dissolve
-    pause 1.5
+    das "{i}(under his breath){/i} Anika."
 
-    "Silence."
-    "Complete, impossible silence."
-    "Then — a frequency. Something that is not sound but arrives like it."
+    scene bg_wormhole_in with dissolve
 
-    ## ── Anika's voice ────────────────────────────────────────────────────────
+    anika_dist "I can see things. I cannot explain it. The past — I can see the past. Moments playing back. 2026. I can see the lab. I can see you, Dr. Das. I can also see forward. Fragments."
 
-    show astro_meera at center with dissolve
+    scene bg_isro with dissolve
+    show scientist_das at left with dissolve
 
-    a "Meera... I am alive. The ship is trapped but stable. Something happened... the particles... we are entangled now."
+    comm "The signal is fading—"
 
-    m "Anika? That is impossible — your pod was pulled into the event horizon—"
+    scene bg_wormhole_in with dissolve
 
-    a "I know what it looks like from your side. From mine... I can see it all. Past, future, the other side. I can see {b}why the Void started.{/b}"
+    anika_dist "There is something beyond this wormhole. Another side. Connected to ours. But it is twenty years behind. I am standing at the edge of two different nows. Send someone. Please—"
 
-    m "Anika, nobody else can hear you. Where are you? What do you mean you can see—"
+    scene bg_isro with dissolve
+    show scientist_das at left with dissolve
 
-    a "Listen to me. We do not have much time before the signal degrades. 2026, Meera. A lab. Two scientists and their hubris."
+    "Signal lost."
 
-    a "The Void did not come from nowhere. {i}We made it.{/i} Humans made it. And you — only you — can go back and stop it."
+    pause 1.0
 
-    m "Go {b}back?{/b}"
+    das "..."
 
-    a "The wormhole is not just a rift in space. It is a rift in {i}time.{/i} The Vikram is stuck — but you are not. Listen to me carefully."
+    comm "Sir — what does she mean? Twenty years behind?"
 
+    das "{i}(slowly){/i} She means the wormhole is not just a bridge through space."
+
+    comm "Sir?"
+
+    das "It is a bridge through time."
+
+    ## ─── CHOICE 3 ────────────────────────────────────────────────────────────
     menu:
-        "I trust you. Tell me what to do.":
-            m "Anika — I trust you. Tell me everything."
+        "Believe Anika. Act immediately.":
+            das "Get me the Director. This changes everything."
             $ trust_anika += 5
-            a "Then listen. The Shunya Lab, Bengaluru. Find Dr. Das — the younger one. He already has doubts. You just need to give him the courage to act on them."
 
-        "I need a scientific explanation first.":
-            m "Anika — how is this possible? None of this makes sense."
-            a "I know. It does not obey the physics we were taught. But you are inside a quantum rift, Meera. You {i}are{/i} the physics now. Trust the signal."
-            $ entanglement_stability -= 5
+        "Be sceptical. Need verification.":
+            das "I need a second source before I take this further."
+            comm "But sir — she said to send someone—"
+            das "And I need certainty before I send someone to their death."
+            $ mir_courage -= 2
 
-    jump act_1_wormhole
+    hide scientist_das
+    scene bg_power with dissolve
+    pause 0.3
 
-## ─── Continuation labels (carried over) ────────────────────────────────────
+    "Das called the Director."
+    "The Director called the Prime Minister."
+    "By dawn, the decision was made."
 
-label act_1_wormhole:
-    scene black with dissolve
-    "Darkness. Silence. Then..."
-    v "Meera... can you... hear me?"
-    m "Anika? Is that you? We saw your pod get sucked into the event horizon!"
-    show astro_meera at center with dissolve
-    a "I am here, Meera. But I am... everywhere else, too. I see the threads of time. I see the end of our world."
+    ## ─── ACT IV TITLE ────────────────────────────────────────────────────────
+    scene black with flash_black
+    pause 0.3
+    show text "{size=80}{b}ACT  IV{/b}{/size}\n{size=36}{color=#888}Vikrant — The Last Hope{/color}{/size}" at truecenter with dissolve
+    pause 2.5
+    hide text with dissolve
+    pause 0.3
 
+    ## ─── Vikrant mission briefing ────────────────────────────────────────────
+    scene bg_isro with dissolve
+    show char_mir      at right with dissolve
+    show scientist_das at left  with dissolve
+    show char_isro_dir at right with dissolve
+    pause 0.3
+
+    "ISRO's fastest mission turnaround. Eighteen days. Zero sleep."
+    "The rocket was named Vikrant — courageous."
+    "Mission: reach Anirva's coordinates, re-establish contact, understand the gateway."
+
+    isro_dir "One pilot. Operates alone inside a quantum anomaly."
+
+    "The room went quiet."
+
+    mir "That is me, sir."
+
+    isro_dir "The mission profile does not guarantee return."
+
+    mir "Neither does staying on Earth."
+
+    das "Mir — you understand what Anika said? If this works — if you go beyond—"
+
+    mir "I understand perfectly, Dr. Das. That is exactly why I am the one who should go."
+
+    ## ─── CHOICE 4 ────────────────────────────────────────────────────────────
     menu:
-        "Trust the voice immediately.":
-            m "Anika, tell me what to do. I trust you."
-            $ trust_anika += 5
-            a "Then listen. The Vikram is stuck, but we can use the entanglement. You must go back."
-        "Demand a scientific explanation.":
-            m "How is this possible? Priya, are you hearing this?"
-            a "Priya cannot hear me, Meera. Only you. Our particles are linked. We are two sides of the same coin now."
-            $ entanglement_stability -= 5
+        "Mir: I am ready. Let us go now.":
+            mir "Stop wasting time. Launch the mission."
+            $ mir_courage += 5
 
-    jump act_2_guidance
-
-label act_2_guidance:
-    scene bg_isro_lab
-    "The crew is frantic, but Meera stands still, listening to the ghost in her ear."
-    a "Meera, in ten seconds, a debris cloud will hit the port side. Tell Arjun to bank right. Now."
-
-    menu:
-        "Command Arjun to bank right.":
-            m "Arjun! Hard right, now!"
-            ar "What? There is nothing on the—"
-            "A massive chunk of frozen time slams past where the ship just was."
-            ar "How did you...?"
+        "Mir: Run me through the entry parameters first.":
+            mir "I need full trajectory data before we commit."
+            das "Of course. Here—"
             $ trust_anika += 2
-        "Wait for Priya's scan.":
-            m "Priya, scan for debris!"
-            p "Scanning... wait, there is—!"
-            "The ship jolts violently as debris clips the wing."
-            $ entanglement_stability -= 10
-            a "You have to listen to me, Meera. Logic will not save us here."
 
-    jump act_3_past_world
+    ## ─── Vikrant Launch ──────────────────────────────────────────────────────
+    hide scientist_das
+    hide char_isro_dir
+    hide char_mir
+    scene bg_rocket with dissolve
+    show char_mir at center with dissolve
+    pause 0.3
 
-label act_3_past_world:
+    "Vikrant launched at 04:00 AM. No public broadcast."
+    "The only light in the sky was the rocket — and the wound above it."
+
+    mir "Systems green. Hull integrity nominal. Approaching boundary."
+
+    ground "Vikrant, you are holding at the boundary. Anirva is at your eleven o'clock — forty-two kilometres."
+
+    mir "Copy. Deploying long-range comms array. Matching Anirva's frequency."
+
+    ## ─── Vikrant contacts Anika ──────────────────────────────────────────────
+    hide char_mir
+    scene bg_wormhole_in with dissolve
+    pause 0.5
+
+    "Eleven minutes after deployment — the comms array locked on."
+
+    anika_dist "Vikrant? Is that a signal from—"
+
+    mir "Anika. This is Mir. We received your transmissions. We are here."
+
+    anika_dist "{i}(voice breaking){/i} Mir. You came."
+
+    mir "Tell me everything about the other side."
+
+    anika_dist "The wormhole connects to our universe. Not another dimension — the same universe. Our Earth. But the exit is displaced in time. By twenty years. If you fly through — you arrive in our world twenty years ago. Before the experiment. Before any of this."
+
+    mir "{i}(long pause){/i} Twenty years. That means someone could go back and stop it."
+
+    anika_dist "Stop Dr. Verma before he presses ignition. Das already had doubts — he had his hand near the override. He just needed someone to say what he could not say himself."
+
+    scene bg_isro with dissolve
+    show scientist_das at left with dissolve
+
+    das "If someone goes through — they have a chance to change the past. To prevent the rift from ever forming."
+
+    scene bg_wormhole_in with dissolve
+
+    anika_dist "But the wormhole is not stable. The threshold will not stay open long. Mir — it could be days."
+
+    ## ─── CHOICE 5 ────────────────────────────────────────────────────────────
+    menu:
+        "Mir: I trust you. Tell me what to do when I get through.":
+            mir "Anika, I trust you completely. What do I need to do on the other side?"
+            anika_dist "Find Dr. Das. Give him the courage to act on what he already knows."
+            mir "Then I will say it."
+            $ trust_anika += 5
+            $ mir_courage += 5
+
+        "Mir: This is a suicide mission. We need more data.":
+            mir "Going in without an exit plan — that is not bravery, that is—"
+            anika_dist "The exit plan is: the past changes. The rift disappears. You find your way back through a world that was never broken."
+            $ trust_anika += 2
+            $ mir_courage -= 3
+
+        "Mir: Someone else should go. Not me.":
+            mir "This does not have to be me. We can send someone else, or a probe—"
+            anika_dist "Mir. I can see fragments of what happens on the other side. It has to be you."
+            "Mir had no answer."
+            $ mir_courage -= 5
+
+    ## ─── ACT V TITLE ─────────────────────────────────────────────────────────
+    scene black with flash_black
+    pause 0.3
+    show text "{size=80}{b}ACT  V{/b}{/size}\n{size=36}{color=#888}Into the Wormhole{/color}{/size}" at truecenter with dissolve
+    pause 2.5
+    hide text with dissolve
+    pause 0.3
+
+    ## ─── Ground Control debate ───────────────────────────────────────────────
+    scene bg_isro with dissolve
+    show scientist_das at left with dissolve
+    show char_isro_dir at right with dissolve
+    pause 0.3
+
+    das "We cannot authorise wormhole entry. We do not know if Vikrant survives transit."
+
+    isro_dir "We do not know anything, Das. That has always been the situation."
+
+    comm "Sir — Anika's signal is degrading. The window is compressing. If we are going to decide—"
+
+    isro_dir "The question is simple. We do nothing — or we send him in."
+
+    das "Or he dies in an event horizon and nothing changes."
+
+    isro_dir "Or he goes through. Twenty years back. And he changes everything."
+
+    isro_dir "Mir — are you still on comms?"
+
+    hide scientist_das
+    hide char_isro_dir
+    scene bg_rocket with dissolve
+    show char_mir at center with dissolve
+
+    mir "I have been listening to every word."
+
+    isro_dir "The decision is yours. You are the one in the seat."
+
+    "Mir looked at the wormhole through the observation port."
+    "Violet. Enormous. Turning slowly — as if breathing."
+
+    scene bg_wormhole_in with dissolve
+
+    anika_dist "Mir. You do not have to do this."
+
+    scene bg_rocket with dissolve
+    show char_mir at center with dissolve
+
+    mir "Someone does."
+
+    anika_dist "It is a one-way door. If the wormhole closes after you transit—"
+
+    ## ─── CHOICE 6 — THE FINAL CHOICE ────────────────────────────────────────
+    menu:
+        "Fly Vikrant straight into the wormhole. No hesitation.":
+            mir "Then I will be in the past with twenty years to find another way home."
+            mir "Dr. Das — if you ever hear this recording — you were right. I am coming."
+            ground "Mir — we have no clearance protocol for this—"
+            mir "Tell my record to say: mission completed."
+            $ mir_courage += 10
+            jump ending_hero
+
+        "Ask Ground Control for official clearance first.":
+            mir "I need Ground Control to give clear authorisation. I will not do this alone."
+            das "Give him the clearance. I take responsibility. Approved."
+            $ trust_anika += 2
+            $ mir_courage += 5
+            jump ending_bittersweet
+
+        "Turn back. The risk is too great.":
+            mir "Anika... I cannot. I am sorry. I cannot go in without certainty."
+            anika_dist "{i}(long silence){/i} I understand, Mir."
+            ground "Vikrant, begin return trajectory."
+            $ mir_courage -= 10
+            jump ending_failure
+
+## ═══════════════════════════════════════════════════════════════════════════
+##  E N D I N G S
+## ═══════════════════════════════════════════════════════════════════════════
+
+label ending_hero:
+
+    scene bg_wormhole_in with flash_blue
+    pause 0.5
+
+    "Vikrant does not hesitate."
+    "Mir pushes the throttle to maximum and flies straight — arrow-straight — into the wormhole."
+
+    scene bg_wormhole_ins with dissolve
+    pause 0.5
+
+    "The hull sings. The instruments go white."
+    "Time becomes visible — not as clocks, but as layered, overlapping light."
+    "He sees the lab. He sees 2026. He sees Dr. Das, hand frozen over the manual override."
+    "The exact moment before everything went wrong."
+
+    mir "{i}(to himself){/i} I see you."
+
+    show char_mir at center with dissolve
+
+    "The wormhole folds closed behind him."
+
+    pause 1.0
+
+    hide char_mir
     scene bg_lab with dissolve
-    "Meera steps out of the landing craft. The air smells of rain and coal smoke — Bengaluru, 2026."
-    a "You are at the Shunya Lab. Das is inside. He already suspects something is wrong. You just need to be the voice he listens to."
-    m "And if I fail?"
-    a "Then nothing changes. And everything ends."
-    m "I am at the door. Anika... what if I fail?"
+    show scientist_das at right with dissolve
+    pause 0.3
 
-    if trust_anika > 10 and entanglement_stability > 40:
-        jump ending_true
-    elif trust_anika < 5:
-        jump ending_bad
-    else:
-        jump ending_bittersweet
+    "Bengaluru. 2026. The air smells of rain."
+    "The Shunya Lab hums. Verma is at the console. Das has his hand near the override."
 
-label ending_true:
-    "Meera convinces Das to pull the override before the field fractures."
-    "The rift never forms. The Void never grows."
-    "In 2047 — the sky clears. Slowly. Then all at once."
-    a "We did it, Meera. I can feel the tether pulling me back."
-    "One particle. Two worlds. Both saved."
+    mir "Dr. Das!"
+
+    das "{i}(startled){/i} Who are you? How did you get inside—"
+
+    mir "There is no time. My name is Mir. I flew through a wormhole your experiment is about to create. You have your hand near that override for a reason. You already know something is wrong. Pull it. Right now."
+
+    "Das stared at him. Then at his hand. Then at the readout."
+
+    show scientist_verma at left with dissolve
+
+    "Verma reached for the ignition."
+
+    das "{b}STOP.{/b}"
+
+    hide scientist_verma
+    "Das slammed the manual override."
+    "The Shunya Core went dark."
+
+    scene bg_power with dissolve
+    pause 0.5
+
+    "The experiment never fired."
+    "The rift never formed."
+    "In 2028 — above Sriharikota — the sky simply cleared."
+
+    pause 0.8
+
+    scene bg_isro with dissolve
+    show scientist_das at left with dissolve
+
+    "ISRO command watched their screens as the wormhole signature vanished."
+
+    anika_dist "{i}(barely a whisper){/i} It worked."
+
+    pause 1.0
+
+    hide scientist_das
+    scene bg_wormhole_ins with dissolve
+    pause 0.5
+
+    "One astronaut. Twenty-eight years. Two timelines. One decision."
+
+    scene black with dissolve
+    pause 1.0
+
+    show text "{size=90}{b}V O I D{/b}{/size}\n{size=28}{color=#9b59b6}Ending — The Hero's Return{/color}{/size}" at truecenter with dissolve
+    pause 4.0
+    hide text with dissolve
     return
+
+## ─────────────────────────────────────────────────────────────────────────────
 
 label ending_bittersweet:
-    "Das hesitates too long. The rift forms — but smaller. Containable."
-    "The Void in 2047 slows. Stops. Does not heal, but does not grow."
-    a "It is not perfect. But the world survives, Meera. That is enough."
+
+    scene bg_wormhole_in with flash_blue
+    pause 0.5
+
+    "Vikrant enters the wormhole with official clearance."
+    "The transit is violent — far more than Anika described."
+
+    scene bg_wormhole_ins with dissolve
+    show char_mir at center with dissolve
+    pause 0.4
+
+    "Three seconds of impossible geometry. Then — air. Rain. Bengaluru, 2026."
+
+    hide char_mir
+    scene bg_lab with dissolve
+    show scientist_das at right with dissolve
+    pause 0.3
+
+    "Mir reaches the lab. The experiment has already started."
+    "The resonance is climbing. Das watches the readout with wide eyes."
+
+    mir "Das — pull the override! The containment is going to fail—"
+
+    das "Security! There is an intruder—"
+
+    mir "Look at the readout! You KNOW something is wrong!"
+
+    "Das looked. The resonance was at 89 percent. Rising."
+
+    hide scientist_das
+    scene bg_lab_blast with flash_red
+    pause 0.4
+    scene bg_lab_blast with dissolve
+
+    "The core fractured — smaller than it would have been. A contained explosion."
+    "Not nothing. But not everything."
+    "The rift formed — a fraction of the original size."
+
+    scene bg_power with dissolve
+    pause 0.4
+
+    "In 2028, the wormhole stopped growing."
+    "The violet fields retreated from the cities. Slowly. Imperfectly."
+    "The world was damaged — but alive."
+
+    scene bg_isro with dissolve
+    show scientist_das at left with dissolve
+
+    anika_dist "He made it. It was not perfect. But the world survives."
+
+    hide scientist_das
+    scene black with dissolve
+    pause 1.0
+
+    show text "{size=90}{b}V O I D{/b}{/size}\n{size=28}{color=#60a0c0}Ending — A Flawed Salvation{/color}{/size}" at truecenter with dissolve
+    pause 4.0
+    hide text with dissolve
     return
 
-label ending_bad:
-    "The confrontation goes wrong. The lab explodes."
-    "The entanglement snaps."
-    a "Meera? I cannot... see... anything..."
-    "The Void consumes everything."
+## ─────────────────────────────────────────────────────────────────────────────
+
+label ending_failure:
+
+    scene bg_rocket with dissolve
+    show char_mir at center with dissolve
+    pause 0.3
+
+    "Vikrant turned."
+    "The engines fired in the opposite direction."
+    "Mir flew home."
+
+    hide char_mir
+    scene bg_isro with dissolve
+    show char_mir at center with dissolve
+    pause 0.3
+
+    "He docked. He climbed out of the cockpit."
+    "He stood in Mission Control surrounded by exhausted faces looking at him for an answer."
+
+    mir "{i}(quietly){/i} I could not do it. I am sorry."
+
+    show scientist_das at left with dissolve
+
+    das "Then we find another way."
+
+    "But above the Earth — the wormhole threshold widened by another half-kilometre."
+
+    "And Anika's signal — they had been watching it the whole time Mir flew home."
+
+    scene bg_wormhole_in with dissolve
+    pause 0.5
+
+    "It went silent at the exact moment Vikrant turned."
+
+    pause 0.8
+
+    scene bg_power with dissolve
+
+    "They never heard from Anika again."
+    "The wormhole grew by 20 kilometres over the next three months."
+
+    pause 0.5
+
+    "Sometimes Mir goes to the roof of Mission Control and watches the violet spiral turn in the night sky."
+    "He tells himself there is still time."
+
+    pause 0.8
+
+    "He is not sure he believes it anymore."
+
+    scene black with dissolve
+    pause 1.0
+
+    show text "{size=90}{b}V O I D{/b}{/size}\n{size=28}{color=#888}Ending — The Weight of Turning Back{/color}{/size}" at truecenter with dissolve
+    pause 4.0
+    hide text with dissolve
     return
