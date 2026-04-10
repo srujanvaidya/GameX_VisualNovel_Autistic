@@ -19,16 +19,15 @@ default entanglement_stability = 50
 
 ## ─── Image Declarations ──────────────────────────────────────────────────────
 
-image bg_lab         = im.Scale("lab.png",          1920, 1080)
-image bg_lab_blast   = im.Scale("lab blast.png",     1920, 1080)
-image bg_isro_rocket = im.Scale("isro rocket.png",   1920, 1080)
-image bg_earth_dead  = im.Scale("power.png",         1920, 1080)  ## swap with earth destroyed.png later
-image bg_isro_lab    = im.Scale("home.png",          1920, 1080)  ## swap with isro lab.png later
+image bg_lab         = Transform("lab.png",          xysize=(1920,1080), fit="cover")
+image bg_lab_blast   = Transform("lab blast.png",     xysize=(1920,1080), fit="cover")
+image bg_isro_rocket = Transform("isro rocket.png",   xysize=(1920,1080), fit="cover")
+image bg_isro_lab    = Transform("home.png",          xysize=(1920,1080), fit="cover")  ## swap with isro lab.png
 
-image scientist_verma = "scientist man.png"
-image scientist_das   = "scientist.png"
-image astro_arjun     = "man astro.png"
-image astro_meera     = "women saree.png"
+image scientist_verma = Transform("scientist man.png", ysize=900, fit="scale-down", yalign=1.0)
+image scientist_das   = Transform("scientist.png",    ysize=900, fit="scale-down", yalign=1.0)
+image astro_arjun     = Transform("man astro.png",    ysize=900, fit="scale-down", yalign=1.0)
+image astro_meera     = Transform("women saree.png",  ysize=900, fit="scale-down", yalign=1.0)
 
 ## ─── START ───────────────────────────────────────────────────────────────────
 
@@ -115,9 +114,9 @@ label start:
 
     verma "{i}(barely a whisper){/i} I know."
 
-    ## ── Year 2047 title card ──────────────────────────────────────────────────
-
+    ## ── Year 2047 title card — start earff destroy audio on black screen ──────
     scene black with dissolve
+    play sound "earff destroy.mp3" fadeout 1.0
     pause 1.0
 
     show text "{size=64}{b}2047{/b}{/size}\n{size=28}{color=#888888}Twenty-one years later.{/color}{/size}" at truecenter with dissolve
@@ -125,11 +124,10 @@ label start:
     hide text with dissolve
     pause 0.4
 
-    ## ── Earth destroyed ──────────────────────────────────────────────────────
+    ## ── Earth destroyed video — fullscreen ───────────────────────────────────
+    $ renpy.movie_cutscene("earth_destroyed.webm")
 
-    scene bg_earth_dead with dissolve
-    pause 0.5
-
+    scene black with dissolve
     "Year 2047. Earth is dying."
     "Black swirls — The Void — consume the horizon. Oceans fold into nothing. Cities vanish in silence."
     "Two billion people gone. The rest watch the sky and wait."

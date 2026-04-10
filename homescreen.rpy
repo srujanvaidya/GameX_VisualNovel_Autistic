@@ -95,12 +95,10 @@ screen main_menu():
 
     tag menu
 
-    add "home.png":
-        xsize 1920
-        ysize 1080
-        xalign 0.5
-        yalign 0.5
-        at void_bg_drift
+    ## Video background — size=(w,h) is the Movie constructor param for render size
+    add Movie(play="homepage.webm", loop=True, size=(1920, 1080)):
+        xpos 0
+        ypos 0
 
 
     add Solid("#ffffff"):
