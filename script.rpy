@@ -43,9 +43,13 @@ image bg_wormhole_ins  = Transform("inside wormhole.png",          xysize=(1920,
 
 image scientist_verma  = Transform("nuclear scientist 1.png", ysize=1030, fit="scale-down", yalign=1.0)
 image scientist_das    = Transform("nuclear scientist 2.png", ysize=1030, fit="scale-down", yalign=1.0)
-image char_anika       = Transform("Anika.png",               ysize=1230, fit="scale-down", yalign=1.0)
-image char_mir         = Transform("lassi.png",               ysize=1230, fit="scale-down", yalign=1.0)
-image char_isro_dir    = Transform("Isro director.png",       ysize=1230, fit="scale-down", yalign=1.0)
+image char_anika       = Transform("Anika.png",               ysize=1680, fit="scale-down", yalign=1.0)
+image char_mir         = Transform("lassi.png",               ysize=1680, fit="scale-down", yalign=1.0)
+image char_isro_dir    = Transform("Isro director.png",       ysize=1680, fit="scale-down", yalign=1.0)
+
+## ─── Video displayables (size forces fullscreen stretch) ────────────────────
+image vid_anki_stuck   = Movie(play="anki stuck.webm",     loop=True, size=(1920, 1080))
+image vid_wormhole     = Movie(play="wormhole travel.webm", loop=True, size=(1920, 1080))
 
 ## ═══════════════════════════════════════════════════════════════════════════
 ##  S T A R T
@@ -269,9 +273,9 @@ label lab_explosion:
     das "Put it on."
 
     ## ─── Anika's first transmission — anki stuck.webm (video-only, muted) ───────
-    ## Mute the movie channel so the video's own audio is silent
+    ## Use image alias for the Movie displayable; audio muted via set_volume
     $ renpy.music.set_volume(0.0, channel="movie")
-    scene Movie("anki stuck.webm", loop=True) with dissolve
+    scene vid_anki_stuck with dissolve
 
     anika_dist "Still alive. Anirva is locked in the gradient field. I am not alone here."
 
@@ -283,7 +287,7 @@ label lab_explosion:
 
     ## Second glimpse
     $ renpy.music.set_volume(0.0, channel="movie")
-    scene Movie("anki stuck.webm", loop=True) with dissolve
+    scene vid_anki_stuck with dissolve
 
     anika_dist "I can see things. I cannot explain it. The past — I can see the past. Moments playing back. 2026. I can see the lab. I can see you, Dr. Das. I can also see forward. Fragments."
 
@@ -295,7 +299,7 @@ label lab_explosion:
 
     ## Third glimpse
     $ renpy.music.set_volume(0.0, channel="movie")
-    scene Movie("anki stuck.webm", loop=True) with dissolve
+    scene vid_anki_stuck with dissolve
 
     anika_dist "There is something beyond this wormhole. Another side. Connected to ours. But it is twenty years behind. I am standing at the edge of two different nows. Send someone. Please—"
 
@@ -540,12 +544,14 @@ label ending_hero:
 
     ## ─── Wormhole travel video (webm) + rumble for 15s ────────────────────
     stop music fadeout 0.3
-    play music "rumble.mp3" fadein 0.5
+    ## Rumble plays on 'sound' channel (separate from music/movie) so it
+    ## is audible throughout the full wormhole sequence
+    play sound "rumble.mp3" fadein 0.5 loop
     $ renpy.music.set_volume(0.0, channel="movie")
-    scene Movie("wormhole travel.webm", loop=True) with dissolve
+    scene vid_wormhole with dissolve
     pause 15.0
     $ renpy.music.set_volume(1.0, channel="movie")
-    stop music fadeout 1.5
+    stop sound fadeout 1.5
     scene black with dissolve
 
     "The hull sings. The instruments go white."
