@@ -27,6 +27,7 @@ style gui_text:
 
 style button:
     properties gui.button_properties("button")
+    activate_sound "47313572-notification-1-reversed-317859 (1).mp3"
 
 style button_text is gui_text:
     properties gui.text_properties("button")
@@ -248,7 +249,7 @@ screen choice(items):
         for i in items:
             button:
                 action i.action
-                activate_sound "audio/click.mp3"
+                activate_sound "47313572-notification-1-reversed-317859 (1).mp3"
                 xsize 420
                 ysize 110
                 background Solid("#ffffff")
