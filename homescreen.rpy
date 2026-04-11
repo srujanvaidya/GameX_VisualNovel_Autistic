@@ -54,14 +54,14 @@ transform void_datacol:
 screen void_btn(label_text, btn_action):
     button:
         action btn_action
-        xsize 330
+        xsize 460
         ysize 56
         background None
         hover_background Solid("#ffffff")
         padding (0, 0, 0, 0)
 
         hbox:
-            xsize 330
+            xsize 460
             ysize 56
 
             frame:
@@ -230,6 +230,10 @@ screen main_menu():
         null height 68
 
         use void_btn("[[ START ]]", Start())
+
+        null height 18
+
+        use void_btn("[[ INFINITE OUTCOMES ]]", Start("infinite_run"))
 
         null height 18
 

@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VOID | Visual Novel</title>
+    <!-- Minimalist Sans-Serif Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <meta name="description" content="VOID. A sci-fi visual novel by ISRO Quantum Research Division.">
+</head>
+
+<body>
+    <!-- Floating Black Pill Navbar -->
+    <div class="nav-wrapper">
+        <nav class="navbar-pill">
+            <div class="logo">VOID</div>
+            <ul class="nav-links">
+                <li><a href="#story">Story</a></li>
+                <li><a href="#features">Features</a></li>
+                <li><a href="#tutorial">Briefing</a></li>
+            </ul>
+            <a href="https://github.com/srujanvaidya/GameX_VisualNovel_Autistic" target="_blank" rel="noopener noreferrer" class="btn-nav">Download Now</a>
+        </nav>
+    </div>
+
+    <!-- Canvas for Black Hole -->
+    <canvas id="void-canvas"></canvas>
+
+    <!-- Hero Section -->
+    <header class="hero">
+        <div class="hero-content">
+            <h1 class="title-minimal">VOID</h1>
+            <p class="subtitle-minimal">One pilot. Two timelines. Infinite endings.</p>
+            <div class="platforms">
+                <span>Available for Mac, Android, and iOS</span>
+            </div>
+            <div class="cta-hero">
+                <a href="https://github.com/srujanvaidya/GameX_VisualNovel_Autistic" target="_blank" rel="noopener noreferrer" class="btn-primary">Download Now</a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Minimalist Metrics Component -->
+    <section class="container stats-section">
+        <div class="stat-item">
+            <span class="stat-number">20</span>
+            <span class="stat-label">Years Displaced</span>
+        </div>
+        <div class="stat-item">
+            <span class="stat-number">∞</span>
+            <span class="stat-label">AI Outcomes</span>
+        </div>
+        <div class="stat-item">
+            <span class="stat-number">01</span>
+            <span class="stat-label">Final Attempt</span>
+        </div>
+    </section>
+
+    <!-- Story / Game Information (Expansive Grid Layout) -->
+    <section id="story" class="container grid-layout">
+        <div class="text-block">
+            <h2>The Shunya Core Anomaly</h2>
+            <p>In 2026, a zero-point quantum energy experiment at the ISRO Research Division in Bengaluru went
+                critically wrong. A containment failure initiated by Dr. Verma and Dr. Das ripped open a wormhole in the
+                stratosphere, plunging the world into a sprawling, violet void.</p>
+        </div>
+        <div class="text-block aligned-text">
+            <p>Two years later, astronaut Anika volunteered for Project Anirva, becoming trapped midway inside the rift
+                and experiencing the past and future simultaneously. Now, it is up to you to pilot the newly forged
+                Vikrant rocket, navigate the spacetime gradient, and travel back 20 years to stop the experiment before
+                it ever begins.</p>
+        </div>
+    </section>
+
+    <!-- Interactive Lore Accordion -->
+    <section id="features" class="container grid-layout">
+        <div class="text-block">
+            <h2>System Data</h2>
+            <p>Analyze the deep-space telemetry and narrative engine integrations governing the anomaly.</p>
+        </div>
+        <div class="accordion">
+            <div class="acc-item">
+                <button class="acc-header">
+                    <span>Metrics & Branching</span>
+                    <span class="acc-icon">+</span>
+                </button>
+                <div class="acc-content">
+                    <p>Every decision influences your underlying metrics—Courage and Trust—directly shifting the
+                        trajectory of Anika and Mir's fate across three base endings.</p>
+                </div>
+            </div>
+            <div class="acc-item">
+                <button class="acc-header">
+                    <span>Infinite AI Protocol</span>
+                    <span class="acc-icon">+</span>
+                </button>
+                <div class="acc-content">
+                    <p>A true narrative breakthrough: using integrations with local and cloud Large Language Models,
+                        your exact dialogue choices create uniquely personalized conclusions. No two playthroughs end
+                        exactly the same.</p>
+                </div>
+            </div>
+            <div class="acc-item">
+                <button class="acc-header">
+                    <span>Cinematic Engine Integration</span>
+                    <span class="acc-icon">+</span>
+                </button>
+                <div class="acc-content">
+                    <p>Experience high-fidelity, natively integrated WebM video cutscenes and custom visceral
+                        soundscapes, built cleanly on the Ren'Py engine avoiding unnecessary bloat.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- YouTube Tutorial Section -->
+    <section id="tutorial" class="container grid-layout" style="margin-bottom: 6rem;">
+        <div class="text-block">
+            <h2>Mission Briefing</h2>
+            <p>Before launching Vikrant, review the standard operational procedures for temporal navigation and LLM
+                terminal interfacing.</p>
+        </div>
+        <div class="video-container">
+            <iframe src="https://www.youtube.com/embed/Pkg0iL_rmtc?si=zgvgnwT-W0jPQ7RE"
+                title="YouTube video player" frameborder="0"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <p>VOID Visual Novel &copy; 2026. ISRO Deep Space Division.</p>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+
+</html>

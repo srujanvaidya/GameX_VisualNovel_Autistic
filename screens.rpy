@@ -107,7 +107,20 @@ screen say(who, what):
                 style "namebox"
                 text who id "who"
 
-        text what id "what"
+        viewport:
+            id "say_viewport"
+            xpos gui.dialogue_xpos
+            ypos gui.dialogue_ypos
+            xsize gui.dialogue_width + 15
+            ymaximum 180
+            mousewheel True
+            draggable True
+            scrollbars "vertical"
+
+            text what id "what":
+                xpos 0
+                ypos 0
+                xsize gui.dialogue_width
 
 
     ## If there's a side image, display it above the text. Do not display on the
@@ -235,6 +248,7 @@ screen choice(items):
         for i in items:
             button:
                 action i.action
+                activate_sound "audio/click.mp3"
                 xsize 420
                 ysize 110
                 background Solid("#ffffff")
@@ -276,31 +290,172 @@ style choice_button_text is default:
     properties gui.text_properties("choice_button")
 
 
-## Quick Menu screen ###########################################################
+## Quick Menu screen — VOID HUD redesign #######################################
 ##
-## The quick menu is displayed in-game to provide easy access to the out-of-game
-## menus.
+## Sleek sci-fi bar pinned to the bottom of the screen.
+## Colour coding: cyan = Save/Load, yellow = Skip/Auto, white = navigation.
 
 screen quick_menu():
 
-    ## Ensure this appears on top of other screens.
     zorder 100
 
     if quick_menu:
 
-        hbox:
-            style_prefix "quick"
-            style "quick_menu"
+        ## ── Monochromatic top backing strip ──────────────────────────────────
+        frame:
+            xfill True
+            ysize 62
+            xalign 0.5
+            yalign 0.0
+            background Solid("#000000e8")
+            padding (0, 0, 0, 0)
 
-            textbutton _("Back") action Rollback()
-            textbutton _("History") action ShowMenu('history')
-            textbutton _("Skip") action Skip() alternate Skip(fast=True, confirm=True)
-            textbutton _("Auto") action Preference("auto-forward", "toggle")
-            textbutton _("Save") action ShowMenu('save')
-            textbutton _("Q.Save") action QuickSave()
-            textbutton _("Q.Load") action QuickLoad()
-            textbutton _("Prefs") action ShowMenu('preferences')
+            fixed:
+                xfill True
+                yfill True
 
+                ## Thin white accent line along the bottom edge
+                frame:
+                    xfill True
+                    ysize 2
+                    xpos 0
+                    ypos 60
+                    background Solid("#ffffff")
+                    padding (0, 0, 0, 0)
+
+                ## ── Button row ──────────────────────────────────────────
+                hbox:
+                    xalign 0.5
+                    yalign 0.5
+                    spacing 10
+
+                    ## Back
+                    button:
+                        action Rollback()
+                        xsize 110
+                        ysize 40
+                        background Solid("#ffffff")
+                        hover_background Solid("#cccccc")
+                        padding (0, 0, 0, 0)
+                        text "< BACK":
+                            font "DejaVuSans.ttf"
+                            size 16
+                            bold True
+                            color "#000000"
+                            xalign 0.5
+                            yalign 0.5
+
+                    ## History
+                    button:
+                        action ShowMenu('history')
+                        xsize 120
+                        ysize 40
+                        background Solid("#ffffff")
+                        hover_background Solid("#cccccc")
+                        padding (0, 0, 0, 0)
+                        text "HISTORY":
+                            font "DejaVuSans.ttf"
+                            size 16
+                            bold True
+                            color "#000000"
+                            xalign 0.5
+                            yalign 0.5
+
+                    ## Skip
+                    button:
+                        action Skip() alternate Skip(fast=True, confirm=True)
+                        xsize 110
+                        ysize 40
+                        background Solid("#ffffff")
+                        hover_background Solid("#cccccc")
+                        padding (0, 0, 0, 0)
+                        text ">> SKIP":
+                            font "DejaVuSans.ttf"
+                            size 16
+                            bold True
+                            color "#000000"
+                            xalign 0.5
+                            yalign 0.5
+
+                    ## Auto
+                    button:
+                        action Preference("auto-forward", "toggle")
+                        xsize 110
+                        ysize 40
+                        background Solid("#ffffff")
+                        hover_background Solid("#cccccc")
+                        padding (0, 0, 0, 0)
+                        text "> AUTO":
+                            font "DejaVuSans.ttf"
+                            size 16
+                            bold True
+                            color "#000000"
+                            xalign 0.5
+                            yalign 0.5
+
+                    ## Save
+                    button:
+                        action ShowMenu('save')
+                        xsize 110
+                        ysize 40
+                        background Solid("#ffffff")
+                        hover_background Solid("#cccccc")
+                        padding (0, 0, 0, 0)
+                        text "SAVE":
+                            font "DejaVuSans.ttf"
+                            size 16
+                            bold True
+                            color "#000000"
+                            xalign 0.5
+                            yalign 0.5
+
+                    ## Q.Save
+                    button:
+                        action QuickSave()
+                        xsize 110
+                        ysize 40
+                        background Solid("#ffffff")
+                        hover_background Solid("#cccccc")
+                        padding (0, 0, 0, 0)
+                        text "Q.SAVE":
+                            font "DejaVuSans.ttf"
+                            size 16
+                            bold True
+                            color "#000000"
+                            xalign 0.5
+                            yalign 0.5
+
+                    ## Q.Load
+                    button:
+                        action QuickLoad()
+                        xsize 110
+                        ysize 40
+                        background Solid("#ffffff")
+                        hover_background Solid("#cccccc")
+                        padding (0, 0, 0, 0)
+                        text "Q.LOAD":
+                            font "DejaVuSans.ttf"
+                            size 16
+                            bold True
+                            color "#000000"
+                            xalign 0.5
+                            yalign 0.5
+
+                    ## Prefs
+                    button:
+                        action ShowMenu('preferences')
+                        xsize 110
+                        ysize 40
+                        background Solid("#ffffff")
+                        hover_background Solid("#cccccc")
+                        padding (0, 0, 0, 0)
+                        text "PREFS":
+                            font "DejaVuSans.ttf"
+                            size 16
+                            bold True
+                            color "#000000"
+                            xalign 0.5
+                            yalign 0.5
 
 ## This code ensures that the quick_menu screen is displayed in-game, whenever
 ## the player has not explicitly hidden the interface.
@@ -309,6 +464,7 @@ init python:
 
 default quick_menu = True
 
+## Fallback style declarations (layout handled inline in the screen above)
 style quick_menu is hbox
 style quick_button is default
 style quick_button_text is button_text

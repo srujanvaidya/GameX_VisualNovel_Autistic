@@ -43,9 +43,13 @@ image bg_wormhole_ins  = Transform("inside wormhole.png",          xysize=(1920,
 
 image scientist_verma  = Transform("nuclear scientist 1.png", ysize=1030, fit="scale-down", yalign=1.0)
 image scientist_das    = Transform("nuclear scientist 2.png", ysize=1030, fit="scale-down", yalign=1.0)
-image char_anika       = Transform("Anika.png",               ysize=1230, fit="scale-down", yalign=1.0)
-image char_mir         = Transform("lassi.png",               ysize=1230, fit="scale-down", yalign=1.0)
-image char_isro_dir    = Transform("Isro director.png",       ysize=1230, fit="scale-down", yalign=1.0)
+image char_anika       = Transform("Anika.png",               ysize=1680, fit="scale-down", yalign=1.0)
+image char_mir         = Transform("lassi.png",               ysize=1680, fit="scale-down", yalign=1.0)
+image char_isro_dir    = Transform("Isro director.png",       ysize=1680, fit="scale-down", yalign=1.0)
+
+## ─── Video displayables (size forces fullscreen stretch) ────────────────────
+image vid_anki_stuck   = Movie(play="anki stuck.webm",     loop=True, size=(1920, 1080))
+image vid_wormhole     = Movie(play="wormhole travel.webm", loop=True, size=(1920, 1080))
 
 ## ═══════════════════════════════════════════════════════════════════════════
 ##  S T A R T
@@ -66,6 +70,9 @@ label start:
     show scientist_verma at left  with dissolve
     show scientist_das   at far_right with dissolve
     pause 0.3
+
+    ## ─── Deep-space ambient — plays under the whole Verma/Das scene ───────────
+    play music "audio/idoberg-deep-space-loop-401165.mp3" fadein 2.0 loop
 
     "ISRO Quantum Research Division — Bengaluru, India."
     "A room that hums. Banks of servers. Light bending around the containment sphere at the centre."
@@ -119,6 +126,7 @@ label lab_explosion:
     ## ─── Explosion ───────────────────────────────────────────────────────────
     hide scientist_verma
     hide scientist_das
+    play sound "audio/undertale-taking-damage.mp3"
     scene bg_lab_blast with flash
     pause 1.2
 
@@ -138,7 +146,9 @@ label lab_explosion:
 
     das "What have we done?"
 
-    ## ─── Earth Destruction — VIDEO + AUDIO ───────────────────────────────────
+    ## ─── Fade out deep-space ambient as the horror sinks in ─────────────────
+    stop music fadeout 3.0
+
     hide scientist_das
     scene black with dissolve
     pause 0.4
@@ -173,7 +183,6 @@ label lab_explosion:
     ## ─── ISRO Mission briefing ───────────────────────────────────────────────
     scene bg_isro with dissolve
     show scientist_das at left with dissolve
-    show char_isro_dir at far_right with dissolve
     pause 0.3
 
     "ISRO Mission Control. Sriharikota. Two years after the rift."
@@ -252,6 +261,8 @@ label lab_explosion:
     ## ─── ACT III TITLE ───────────────────────────────────────────────────────
     scene black with flash_black
     pause 0.3
+    ## ─── "Into the Unknown" plays from Act III through to the end ─────────────
+    play music "audio/Into the Unknown.mp3" fadein 2.0 loop
     show text "{size=80}{b}ACT  III{/b}{/size}\n{size=36}{color=#888}The Signal{/color}{/size}" at truecenter with dissolve
     pause 2.5
     hide text with dissolve
@@ -269,9 +280,9 @@ label lab_explosion:
     das "Put it on."
 
     ## ─── Anika's first transmission — anki stuck.webm (video-only, muted) ───────
-    ## Mute the movie channel so the video's own audio is silent
+    ## Use image alias for the Movie displayable; audio muted via set_volume
     $ renpy.music.set_volume(0.0, channel="movie")
-    scene Movie("anki stuck.webm", loop=True) with dissolve
+    scene vid_anki_stuck with dissolve
 
     anika_dist "Still alive. Anirva is locked in the gradient field. I am not alone here."
 
@@ -283,7 +294,7 @@ label lab_explosion:
 
     ## Second glimpse
     $ renpy.music.set_volume(0.0, channel="movie")
-    scene Movie("anki stuck.webm", loop=True) with dissolve
+    scene vid_anki_stuck with dissolve
 
     anika_dist "I can see things. I cannot explain it. The past — I can see the past. Moments playing back. 2026. I can see the lab. I can see you, Dr. Das. I can also see forward. Fragments."
 
@@ -295,7 +306,7 @@ label lab_explosion:
 
     ## Third glimpse
     $ renpy.music.set_volume(0.0, channel="movie")
-    scene Movie("anki stuck.webm", loop=True) with dissolve
+    scene vid_anki_stuck with dissolve
 
     anika_dist "There is something beyond this wormhole. Another side. Connected to ours. But it is twenty years behind. I am standing at the edge of two different nows. Send someone. Please—"
 
@@ -349,9 +360,7 @@ label lab_explosion:
 
     ## ─── Vikrant mission briefing ────────────────────────────────────────────
     scene bg_isro with dissolve
-    show char_mir      at far_right with dissolve
     show scientist_das at left  with dissolve
-    show char_isro_dir at far_right with dissolve
     pause 0.3
 
     "ISRO's fastest mission turnaround. Eighteen days. Zero sleep."
@@ -387,8 +396,7 @@ label lab_explosion:
     hide scientist_das
     hide char_isro_dir
     hide char_mir
-    scene bg_rocket with dissolve
-    show char_mir at center with dissolve
+    scene bg_rocket
     pause 0.3
 
     "Vikrant launched at 04:00 AM. No public broadcast."
@@ -462,7 +470,6 @@ label lab_explosion:
     ## ─── Ground Control debate ───────────────────────────────────────────────
     scene bg_isro with dissolve
     show scientist_das at left with dissolve
-    show char_isro_dir at far_right with dissolve
     pause 0.3
 
     das "We cannot authorise wormhole entry. We do not know if Vikrant survives transit."
@@ -482,7 +489,6 @@ label lab_explosion:
     hide scientist_das
     hide char_isro_dir
     scene bg_rocket with dissolve
-    show char_mir at center with dissolve
 
     mir "I have been listening to every word."
 
@@ -540,12 +546,14 @@ label ending_hero:
 
     ## ─── Wormhole travel video (webm) + rumble for 15s ────────────────────
     stop music fadeout 0.3
-    play music "rumble.mp3" fadein 0.5
+    ## Rumble plays on 'sound' channel (separate from music/movie) so it
+    ## is audible throughout the full wormhole sequence
+    play sound "rumble.mp3" fadein 0.5 loop
     $ renpy.music.set_volume(0.0, channel="movie")
-    scene Movie("wormhole travel.webm", loop=True) with dissolve
+    scene vid_wormhole with dissolve
     pause 15.0
     $ renpy.music.set_volume(1.0, channel="movie")
-    stop music fadeout 1.5
+    stop sound fadeout 1.5
     scene black with dissolve
 
     "The hull sings. The instruments go white."
@@ -739,3 +747,61 @@ label ending_failure:
     pause 4.0
     hide text with dissolve
     return
+
+## ═══════════════════════════════════════════════════════════════════════════
+##  I N F I N I T E   R U N   M O D E   ( L l a m a   3 . 2 )
+##  Isolated Module — Does not affect primary 'label start' storyline.
+## ═══════════════════════════════════════════════════════════════════════════
+
+label infinite_run:
+
+    scene black with dissolve
+    pause 0.5
+    show text "{size=80}{b}INFINITE OUTCOMES{/b}{/size}\n{size=36}{color=#888}A Generative Visual Novel Mode{/color}{/size}" at truecenter with dissolve
+    pause 2.5
+    hide text with dissolve
+
+    ## ── Load the canonical backgrounds and sprites ───────────────────────
+    scene bg_lab with dissolve
+    show scientist_das   at far_right with dissolve
+    show scientist_verma at left      with dissolve
+    pause 0.5
+
+    $ ai_context = "Context: Dr. Verma and Dr. Das are in the ISRO lab in 2026. The Shunya Core is humming loudly. The player is a new lab assistant who just walked in. Provide an opening line."
+    
+    label inf_loop:
+        $ lines_counter = 0
+
+    label generate_lines:
+        show text "{size=30}{color=#FF0000}(( Awaiting Llama 3.2 Uplink... )){/color}{/size}" at top
+        $ renpy.pause(0.1, hard=True)
+        
+        $ speaker, text_response = get_structured_llama_dialogue(ai_context + "\nWrite EXACTLY ONE next line of dialogue or narration that naturally progresses the scene.")
+        
+        hide text
+        
+        ## ── Dynamically assign text to the correct canonical character ───
+        if speaker == "VERMA":
+            verma "[text_response]"
+        elif speaker == "DAS":
+            das "[text_response]"
+        else:
+            "SYSTEM/NARRATOR" "[text_response]"
+            
+        ## Update the hidden ongoing contextual memory for Llama 3.2
+        $ ai_context += "\n" + speaker + ": " + text_response
+        $ lines_counter += 1
+        
+        if lines_counter < 4:
+            jump generate_lines
+            
+        ## ── Player Interaction ───
+        $ player_input = renpy.input("WHAT DO YOU DO? (type 'quit' to exit): ")
+        
+        if player_input.strip().lower() in ["quit", "exit", "leave"]:
+            "SYSTEM" "SEVERING UPLINK. RETURNING TO TERMINAL."
+            return
+            
+        $ ai_context += "\nPlayer: " + player_input
+        
+        jump inf_loop
