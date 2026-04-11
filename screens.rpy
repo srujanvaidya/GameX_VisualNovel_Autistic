@@ -1728,14 +1728,97 @@ screen quick_menu():
 
     if quick_menu:
 
-        hbox:
-            style "quick_menu"
-            style_prefix "quick"
+        ## ── Monochromatic top backing strip (Mobile Variant) ──
+        frame:
+            xfill True
+            ysize 80
+            xalign 0.5
+            yalign 0.0
+            background Solid("#000000e8")
+            padding (0, 0, 0, 0)
 
-            textbutton _("Back") action Rollback()
-            textbutton _("Skip") action Skip() alternate Skip(fast=True, confirm=True)
-            textbutton _("Auto") action Preference("auto-forward", "toggle")
-            textbutton _("Menu") action ShowMenu()
+            fixed:
+                xfill True
+                yfill True
+
+                ## Thin white accent line along the bottom edge
+                frame:
+                    xfill True
+                    ysize 3
+                    xpos 0
+                    ypos 77
+                    background Solid("#ffffff")
+                    padding (0, 0, 0, 0)
+
+                ## ── Button row (bigger for touch targets) ──
+                hbox:
+                    xalign 0.5
+                    yalign 0.5
+                    spacing 15
+
+                    ## Back
+                    button:
+                        action Rollback()
+                        xsize 160
+                        ysize 52
+                        background Solid("#ffffff")
+                        hover_background Solid("#cccccc")
+                        padding (0, 0, 0, 0)
+                        text "< BACK":
+                            font "DejaVuSans.ttf"
+                            size 22
+                            bold True
+                            color "#000000"
+                            xalign 0.5
+                            yalign 0.5
+
+                    ## Skip
+                    button:
+                        action Skip() alternate Skip(fast=True, confirm=True)
+                        xsize 160
+                        ysize 52
+                        background Solid("#ffffff")
+                        hover_background Solid("#cccccc")
+                        padding (0, 0, 0, 0)
+                        text ">> SKIP":
+                            font "DejaVuSans.ttf"
+                            size 22
+                            bold True
+                            color "#000000"
+                            xalign 0.5
+                            yalign 0.5
+
+                    ## Auto
+                    button:
+                        action Preference("auto-forward", "toggle")
+                        xsize 160
+                        ysize 52
+                        background Solid("#ffffff")
+                        hover_background Solid("#cccccc")
+                        padding (0, 0, 0, 0)
+                        text "> AUTO":
+                            font "DejaVuSans.ttf"
+                            size 22
+                            bold True
+                            color "#000000"
+                            xalign 0.5
+                            yalign 0.5
+
+                    ## Menu
+                    button:
+                        action ShowMenu()
+                        xsize 160
+                        ysize 52
+                        background Solid("#ffffff")
+                        hover_background Solid("#cccccc")
+                        padding (0, 0, 0, 0)
+                        text "MENU":
+                            font "DejaVuSans.ttf"
+                            size 22
+                            bold True
+                            color "#000000"
+                            xalign 0.5
+                            yalign 0.5
 
 
 style window:
